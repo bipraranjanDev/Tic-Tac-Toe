@@ -24,20 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
         msgContainer.classList.add("hide");
     };
 
-    boxes.forEach((box) => {
-        box.addEventListener("click", () => {
-            if (turnO) {
-                box.innerText = "O";
-                turnO = false;
-            } else {
-                box.innerText = "X";
-                turnO = true;
-            }
-            box.disabled = true;
-            checkWinner();
-        });
-    });
-
     const disableBoxes = () => {
         boxes.forEach((box) => box.disabled = true);
     };
@@ -63,25 +49,42 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (pos1Val && pos1Val === pos2Val && pos2Val === pos3Val) {
                 showWinner(pos1Val);
-            } 
+                return true; 
+            }
         }
-            // If no winner and all boxes are filled, it's a draw
-let isDraw = true;
-boxes.forEach((box) => {
-    if (box.innerText === "") {
-        isDraw = false;
-    }
-});
 
-if (isDraw) {
-    msg.innerText = "Game Over! It's a draw!";
-    msgContainer.classList.remove("hide");
-    disableBoxes();
-}
+        let isDraw = true;
+        boxes.forEach((box) => {
+            if (box.innerText.trim() === "") {
+                isDraw = false;
+            }
+        });
+
+        if (isDraw) {
+            msg.innerText = "Game over. It's a draw!";
+            msgContainer.classList.remove("hide");
+            disableBoxes();
+        }
+
+        return false;
     };
 
+    boxes.forEach((box) => {
+        box.addEventListener("click", () => {
+            if (box.innerText !== "") return; 
+
+            if (turnO) {
+                box.innerText = "O";
+                turnO = false;
+            } else {
+                box.innerText = "X";
+                turnO = true;
+            }
+
+            checkWinner();
+        });
+    });
 
     resetBtn.addEventListener("click", resetGame);
     newGameBtn.addEventListener("click", resetGame);
-    
 });
