@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const showWinner = (winner) => {
-        msg.innerText = `Congratulations! ${winner} is the winner!`;
+        msg.innerText = `Congratulations! The winner is ${winner} !`;
         msgContainer.classList.remove("hide");
         disableBoxes();
     };
